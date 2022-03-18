@@ -4,7 +4,9 @@ Install the following
 
 1- Install npm\
 2- Install mongo\
-3- Downgrade node to 10.24.0\
+3- Downgrade node to 10.24.0
+
+[More info on downgrading node](https://stackoverflow.com/questions/47008159/how-to-downgrade-node-version)
 
 ## Tracker-api
 
