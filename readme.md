@@ -1,3 +1,8 @@
+## Deploy
+
+python3 deploy/deploy.py
+
+
 ## Getting Started
 
 Install the following
