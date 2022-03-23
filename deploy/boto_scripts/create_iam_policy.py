@@ -28,5 +28,3 @@ def create_iam_policy():
         PolicyDocument=json.dumps(my_managed_policy)
         )
     print(response)
-
-create_iam_policy()
