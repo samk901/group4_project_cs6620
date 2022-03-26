@@ -1,3 +1,8 @@
+## Deploy
+
+python3 deploy/deploy.py
+
+
 ## Getting Started
 
 Clone the github repo
