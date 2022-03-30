@@ -17,13 +17,10 @@ async function render(req, res) {
     const match = matchPath(req.path, activeRoute);
     const index = req.url.indexOf('?');
     const search = index !== -1 ? req.url.substr(index) : null;
-    initialData = await activeRoute.component.fetchData(match, search, req.headers.cookie);
+    initialData = await activeRoute.component.fetchData(match, search);
   }
 
-  const userData = await Page.fetchData(req.headers.cookie);
-
   store.initialData = initialData;
-  store.userData = userData;
   const context = {};
   const element = (
     <StaticRouter location={req.url} context={context}>
@@ -35,7 +32,7 @@ async function render(req, res) {
   if (context.url) {
     res.redirect(301, context.url);
   } else {
-    res.send(template(body, initialData, userData));
+    res.send(template(body, initialData));
   }
 
   res.send(template(body, initialData));

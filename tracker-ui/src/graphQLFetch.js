@@ -7,18 +7,14 @@ function jsonDateReviver(key, value) {
   return value;
 }
 
-export default async function
-graphQLFetch(query, variables = {}, showError = null, cookie = null) {
+export default async function graphQLFetch(query, variables = {}, showError = null) {
   const apiEndpoint = (__isBrowser__) // eslint-disable-line no-undef
     ? window.ENV.UI_API_ENDPOINT
     : process.env.UI_SERVER_API_ENDPOINT;
   try {
-    const headers = { 'Content-Type': 'application/json' };
-    if (cookie) headers.Cookie = cookie;
     const response = await fetch(apiEndpoint, {
       method: 'POST',
-      credentials: 'include',
-      headers,
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query, variables }),
     });
     const body = await response.text();
@@ -36,6 +32,6 @@ graphQLFetch(query, variables = {}, showError = null, cookie = null) {
     return result.data;
   } catch (e) {
     if (showError) showError(`Error in sending data to server: ${e.message}`);
-    return null;
   }
+  return null;
 }

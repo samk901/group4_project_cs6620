@@ -1,6 +1,5 @@
 const { UserInputError } = require('apollo-server-express');
 const { getDb, getNextSequence } = require('./db.js');
-const { mustBeSignedIn } = require('./auth.js');
 
 const PAGE_SIZE = 10;
 
@@ -134,10 +133,10 @@ async function counts(_, { status, effortMin, effortMax }) {
 
 module.exports = {
   list,
-  add: mustBeSignedIn(add),
+  add,
   get,
-  update: mustBeSignedIn(update),
-  delete: mustBeSignedIn(remove),
-  restore: mustBeSignedIn(restore),
+  update,
+  delete: remove,
+  restore,
   counts,
 };

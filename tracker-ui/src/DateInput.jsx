@@ -55,6 +55,7 @@ export default class DateInput extends React.Component {
       : displayFormat(origValue);
     return (
       <input
+        type="text"
         {...props}
         value={displayValue}
         placeholder={focused ? 'yyyy-mm-dd' : null}

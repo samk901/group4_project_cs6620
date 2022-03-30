@@ -1,12 +1,8 @@
 {
-  "name": "pro-mern-stack-2-ui",
+  "name": "book-project-ui",
   "version": "1.0.0",
-  "description": "Pro MERN Stack (2nd Edition) - UI",
+  "description": "",
   "main": "index.js",
-  "engines": {
-    "node": "10.x",
-    "npm": "6.x"
-  },
   "scripts": {
     "#start": "UI server. HMR is enabled in dev mode",
     "start": "node dist/server.js",
@@ -17,16 +13,14 @@
     "#watch-server-hmr": "Recompile server HML bundle on changes",
     "watch-server-hmr": "webpack -w --config webpack.serverHMR.js",
     "#dev-all": "Dev mode: watch for server changes and start UI server",
-    "dev-all": "rm dist/* && npm run watch-server-hmr & sleep 5 && npm start",
-    "heroku-postbuild": "npm run compile && ln -fs ../node_modules/bootstrap/dist public/bootstrap"
+    "dev-all": "rm dist/* && npm run watch-server-hmr & sleep 5 && npm start"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vasansr/pro-mern-stack-2.git"
+    "url": "git+https://github.com/tonymullen/ProMERNStackBook.git"
   },
-  "author": "samk90@gmail.com",
+  "author": "",
   "license": "ISC",
-  "homepage": "https://github.ccs.neu.edu/NEU-CS5610-SU21/DonghyeonSamKim-Book",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^3.4.1",
@@ -43,7 +37,6 @@
     "react-router-dom": "^4.3.1",
     "react-select": "^2.4.4",
     "serialize-javascript": "^1.9.1",
-    "source-map-support": "^0.5.16",
     "url-search-params": "^1.1.0"
   },
   "devDependencies": {
@@ -57,7 +50,7 @@
     "eslint-plugin-import": "^2.20.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.18.0",
-    "webpack": "^4.46.0",
+    "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
     "webpack-dev-middleware": "^3.7.2",
     "webpack-hot-middleware": "^2.25.0",

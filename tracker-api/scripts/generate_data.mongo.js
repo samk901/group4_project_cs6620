@@ -1,21 +1,21 @@
 /* global db print */
 /* eslint no-restricted-globals: "off" */
-
-const owners = ['Ravan', 'Eddie', 'Pieta', 'Parvati', 'Victor'];
+const owners = ['Tony', 'Elton', 'Marge', 'Pat', 'Viola'];
 const statuses = ['New', 'Assigned', 'Fixed', 'Closed'];
 
 const initialCount = db.issues.count();
 
 for (let i = 0; i < 100; i += 1) {
-  const randomCreatedDate = (new Date())
+  const randomCreateDate = (new Date())
     - Math.floor(Math.random() * 60) * 1000 * 60 * 60 * 24;
-  const created = new Date(randomCreatedDate);
+  const created = new Date(randomCreateDate);
   const randomDueDate = (new Date())
     - Math.floor(Math.random() * 60) * 1000 * 60 * 60 * 24;
   const due = new Date(randomDueDate);
 
-  const owner = owners[Math.floor(Math.random() * 5)];
-  const status = statuses[Math.floor(Math.random() * 4)];
+  const owner = owners[Math.floor(Math.random() * owners.length)];
+  const status = statuses[Math.floor(Math.random() * statuses.length)];
+
   const effort = Math.ceil(Math.random() * 20);
   const title = `Lorem ipsum dolor sit amet, ${i}`;
   const id = initialCount + i + 1;

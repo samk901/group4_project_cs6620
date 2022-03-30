@@ -1,6 +1,6 @@
 import React from 'react';
-import URLSearchParams from 'url-search-params';
 import { Panel, Pagination, Button } from 'react-bootstrap';
+import URLSearchParams from 'url-search-params';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import IssueFilter from './IssueFilter.jsx';
@@ -80,10 +80,15 @@ class IssueList extends React.Component {
 
   constructor() {
     super();
+    // const issues = store.initialData ? store.initialData.issueList : null;
+    // const selectedIssue = store.initialData
+    //   ? store.initialData.issueList.issues
+    //   : null;
     const initialData = store.initialData || { issueList: {} };
     const {
       issueList: { issues, pages }, issue: selectedIssue,
     } = initialData;
+
     delete store.initialData;
     this.state = {
       issues,
@@ -191,13 +196,12 @@ class IssueList extends React.Component {
   render() {
     const { issues } = this.state;
     if (issues == null) return null;
-
     const { selectedIssue, pages } = this.state;
     const { location: { search } } = this.props;
-
     const params = new URLSearchParams(search);
     let page = parseInt(params.get('page'), 10);
     if (Number.isNaN(page)) page = 1;
+
     const startPage = Math.floor((page - 1) / SECTION_SIZE) * SECTION_SIZE + 1;
     const endPage = startPage + SECTION_SIZE - 1;
     const prevSection = startPage === 1 ? 0 : startPage - SECTION_SIZE;

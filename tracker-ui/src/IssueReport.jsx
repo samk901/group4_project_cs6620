@@ -11,7 +11,7 @@ const statuses = ['New', 'Assigned', 'Fixed', 'Closed'];
 class IssueReport extends React.Component {
   static async fetchData(match, search, showError) {
     const params = new URLSearchParams(search);
-    const vars = { };
+    const vars = {};
     if (params.get('status')) vars.status = params.get('status');
 
     const effortMin = parseInt(params.get('effortMin'), 10);
@@ -23,7 +23,7 @@ class IssueReport extends React.Component {
       $status: StatusType
       $effortMin: Int
       $effortMax: Int
-    ) {
+    ){
       issueCounts(
         status: $status
         effortMin: $effortMin
