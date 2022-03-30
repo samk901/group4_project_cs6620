@@ -11,7 +11,7 @@ def create_instance():
 	try:
 		instance = ec2.create_instances(
 		ImageId = 'ami-033b95fb8079dc481',
-		MinCoint = 1,
+		MinCount = 1,
 		MaxCount = 1,
 		InstanceType = 't2.micro',
 		KeyName = 'lab2key',
@@ -28,7 +28,7 @@ def create_instance():
               	],
 		BlockDeviceMappings=[{"DeviceName": "/dev/xvda","Ebs" : { "VolumeSize" : 10 }}]
 		)
-	except: boto3core.exceptions.ClientError as e:
+	except botocore.exceptions.ClientError as e:
 		print(e)
 
 create_instance()
