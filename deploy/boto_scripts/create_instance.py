@@ -30,3 +30,5 @@ def create_instance():
 		)
 	except: boto3core.exceptions.ClientError as e:
 		print(e)
+
+create_instance()
