@@ -10,7 +10,7 @@ UIDIR=/tracker-ui
 
 # Move Repo File to yum repo
 echo "==> Moving mongo-org-5.0.repo to /etc.yum.repos.d/ to allow for yum install"
-sudo mv mongo-org-5.0.repo /etc/yum.repos.d/
+sudo cp mongo-org-5.0.repo /etc/yum.repos.d/
 
 # Install mongodb
 echo "==> Installing latest stable version of MongoDB"
