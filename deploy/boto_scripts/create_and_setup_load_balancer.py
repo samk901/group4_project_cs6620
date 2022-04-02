@@ -40,10 +40,71 @@ def create_load_balancer(lb_security_group_id, lb_subnets):
 
         )
     except botocore.exceptions.ClientError as e:
-        print("Create load balander error " + e)
+        print(e)
     else:
         return lb
 
+def create_target_group(vpc_id):
+
+    try:
+        lb_client = boto3.client('elbv2')
+
+        tg = lb_client.create_target_group(
+            Name='application-target-group',
+            Port=80,
+            Protocol='HTTP',
+            VpcId=vpc_id,
+            TargetType='instance'
+        )
+
+    except botocore.exceptions.ClientError as e:
+        print(e)
+    else:
+        #print(list(tg.values())[0][0].get('TargetGroupArn'))
+        return tg
+
+#Can call this method for each ec2 instance we have
+def register_ec2_instance_with_target_group(target_group_arn, ec2_instance_id):
+
+    try:
+        lb_client = boto3.client('elbv2')
+
+        response = lb_client.register_targets(
+            TargetGroupArn=target_group_arn,
+            Targets=[
+                {
+                    'Id': ec2_instance_id,
+                    'Port': 80,
+                }
+            ],
+        )
+
+    except botocore.exceptions.ClientError as e:
+        print(e)
+    else:
+        return response
+
+def create_listener(target_group_arn, load_balancer_arn):
+
+    try:
+        lb_client = boto3.client('elbv2')
+
+        response = lb_client.create_listener(
+            DefaultActions=[
+                {
+                    'TargetGroupArn': target_group_arn,
+                    'Type': 'forward',
+                },
+                ],
+            LoadBalancerArn=load_balancer_arn,
+            Port=80,
+            Protocol='HTTP',
+        )
+
+    except botocore.exceptions.ClientError as e:
+        print(e)
+    else:
+        return response
 
 def main():
 
@@ -51,7 +112,10 @@ def main():
     load_balancer = create_load_balancer(load_balancer_security_group.id, [
         'subnet-073cd7a90757fd3a4',
         'subnet-0e7ef3710998198bc',
-    ]) #Temporary testing with hardcoded subnets
+    ]) 
+    target_group = create_target_group('vpc-08a8476b32003e8d3') #Tempoary testing with my VPC_ID, will use vpc_id we generate
+    registered_target = register_ec2_instance_with_target_group(list(target_group.values())[0][0].get('TargetGroupArn'), 'i-0e53508f76ae0d3f2') #Temporary testing with a hard-coded instance ID, will use instance ID we generate
+    #listener = create_listener(list(target_group.values())[0][0].get('TargetGroupArn'), GET_LOAD_BALANCER_ARN) Have not tested yet
 
 if __name__ == "__main__":
     main()
