@@ -18,7 +18,7 @@ import os
 import json
 from boto_scripts.create_key_pair import create_pem
 from boto_scripts.create_instance import create_instance
-
+import time
 
 
 def deploy():
@@ -41,6 +41,7 @@ def deploy():
         # docker run --name some-mongo -d mongo:tag
 
         # Create instance to load mongo onto
+        time.sleep(10)
         public_ip = create_instance(keyname)
         print(public_ip)
     
