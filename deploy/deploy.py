@@ -43,11 +43,11 @@ def deploy():
         # Create instance to load mongo onto
 #        time.sleep(10)
         public_ip = create_instance(keyname)
-        print(public_ip)
+        print('DB Instance IP:', public_ip)
         key = keyname +'.pem'
-        send_cmd(key, public_ip, 'sudo apt update -y')
-        send_cmd(key, public_ip, 'sudo apt upgrade -y')
-        send_cmd(key, public_ip, 'sudo apt install docker.io -y')
+        send_cmd(key, public_ip, 'sudo yum update -y')
+        send_cmd(key, public_ip, 'sudo yum upgrade -y')
+        send_cmd(key, public_ip, 'sudo yum install docker.io -y')
             
     # API
         # Inside of create_instance method:
