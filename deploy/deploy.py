@@ -18,7 +18,7 @@ import os
 import json
 from boto_scripts.create_key_pair import create_pem
 from boto_scripts.create_instance import create_instance
-import time
+from boto_scripts.send_cmd import send_cmd
 
 
 def deploy():
@@ -44,7 +44,10 @@ def deploy():
 #        time.sleep(10)
         public_ip = create_instance(keyname)
         print(public_ip)
-    
+        send_cmd(public_ip, 'sudo apt update -y')
+        send_cmd(public_ip, 'sudo apt upgrade -y')
+        send_cmd(public_ip, 'sudo apt install docker.io -y'
+            
     # API
         # Inside of create_instance method:
             # create ec2 instance, open port 3000, 

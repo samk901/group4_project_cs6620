@@ -15,8 +15,7 @@ def send_cmd(ip, cmd):
     data = stdout.read().splitlines()
     for line in data:
         x = line.decode()
-        #print(line.decode())
-        #print(x,i)
+        print(x)
         ssh.close()
 
 #send_cmd('54.145.13.62', 'mkdir test')
