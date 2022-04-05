@@ -28,7 +28,7 @@ def deploy():
         # vpc_id = create_vpc()
 
         #fixing some ec2 access errors...
-        create_iam_access()
+        create_iam_policy()
 
 
         # Create security group here
