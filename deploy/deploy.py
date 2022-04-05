@@ -26,8 +26,7 @@ def deploy():
         # vpc_id = create_vpc()
 
 
-        # This is broken in aws academy / not needed
-        #create_iam_policy()
+        # Create security group here
     
         # Create ssh key
         keyname = create_pem()
