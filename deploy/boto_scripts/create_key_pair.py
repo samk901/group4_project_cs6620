@@ -9,6 +9,6 @@ def create_pem():
     #print(response.keys())
     with open('./'+keyname+'.pem', 'w') as file:
         file.write(response.get('KeyMaterial'))
-    return keyname+ '.pem'
+    return keyname
 #create_pem()
 
