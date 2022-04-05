@@ -46,7 +46,7 @@ def deploy():
         print(public_ip)
         send_cmd(public_ip, 'sudo apt update -y')
         send_cmd(public_ip, 'sudo apt upgrade -y')
-        send_cmd(public_ip, 'sudo apt install docker.io -y'
+        send_cmd(public_ip, 'sudo apt install docker.io -y')
             
     # API
         # Inside of create_instance method:
