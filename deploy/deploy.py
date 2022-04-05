@@ -32,7 +32,7 @@ def deploy():
             
             create_iam_policy()
         except:
-            continue
+            pass
 
         # Create security group here
         create_sg()
