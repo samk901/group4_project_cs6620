@@ -28,7 +28,7 @@ def create_instance(pem_key):
                                 ]
                    },
               	],
-		SecurityGroups=['final_project']
+		SecurityGroups=['final_project'],
                 BlockDeviceMappings=[{"DeviceName": "/dev/sda1","Ebs" : { "VolumeSize" : 10 }}]
 		)
 		instance[0].wait_until_running()
