@@ -1,6 +1,7 @@
 import boto3
 import random
 import string
+import os
 
 def create_pem():
     ec2 = boto3.client('ec2')
@@ -9,6 +10,7 @@ def create_pem():
     #print(response.keys())
     with open('./'+keyname+'.pem', 'w') as file:
         file.write(response.get('KeyMaterial'))
+    os.system('chmod 400 ' + keyname + '.pem')
     return keyname
 #create_pem()
 
