@@ -19,4 +19,5 @@ def send_cmd(ip, cmd):
         #print(x,i)
         ssh.close()
 
-send_cmd('54.145.13.62', 'mkdir test')
+#send_cmd('54.145.13.62', 'mkdir test')
+

@@ -1,7 +1,7 @@
 import boto3
 import botocore
 
-def create_instance():
+def create_instance(pem_key):
 
 	try:
 		ec2 = boto3.resource('ec2')
@@ -10,11 +10,13 @@ def create_instance():
 
 	try:
 		instance = ec2.create_instances(
-		ImageId = 'ami-033b95fb8079dc481',
+#		ImageId = 'ami-033b95fb8079dc481',
+                # switched it to ubuntu...
+                ImageId = 'ami-0e472ba40eb589f49',
 		MinCount = 1,
 		MaxCount = 1,
 		InstanceType = 't2.micro',
-		KeyName = 'lab2key',
+		KeyName = pem_key,
 		TagSpecifications= [
                     {
                         'ResourceType': 'instance',
@@ -28,6 +30,9 @@ def create_instance():
               	],
 		BlockDeviceMappings=[{"DeviceName": "/dev/xvda","Ebs" : { "VolumeSize" : 10 }}]
 		)
+                instance[0].wait_until_running()
+                instance[0].load()
+                return instance[0].public_ip_address
 	except botocore.exceptions.ClientError as e:
 		print(e)
 

@@ -27,22 +27,13 @@ def deploy():
         # vpc_id = create_vpc()
 
 
-    # DATABASE -> DocDB Method
+        # This is broken in aws academy / not needed
+        #create_iam_policy()
+    
+        # Create ssh key
+        keyname = create_key_pair()
         
-        # Set up iam policy -> something is not right abt this currently
-        # Reference: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/iam.html#IAM.Client.create_policy
-        create_iam_policy()
-
-        # Create cluster, return mongo url for the cluster
-        # Reference: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/docdb.html?highlight=documentdb#DocDB.Client.create_db_cluster
-        mongodb_endpoint, cluster_id = create_cluster()
-
-        # Assign instances to that cluster
-        # Reference https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/docdb.html?highlight=documentdb#DocDB.Client.create_db_instance
-        # Run multiple times to add more instances
-        create_cluster_instance(cluster_id)
-
-    # BACKUP DATABASE METHOD-> Mongo Docker (use if issues with DocDB)
+    # DATABASE METHOD-> Mongo Docker
         # Reference: https://hub.docker.com/_/mongo
         # create security group using vpc_id (open port 27017 to all ips or just the api loadbalancer ip?)
         # create ec2 instance, return ip address
@@ -50,7 +41,9 @@ def deploy():
         # sudo docker pull mongo
         # docker run --name some-mongo -d mongo:tag
 
-
+        # Create instance to load mongo onto
+        public_ip = create_instance(keyname)
+        print(public_ip)
     
     # API
         # Inside of create_instance method:
