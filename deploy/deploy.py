@@ -44,9 +44,10 @@ def deploy():
 #        time.sleep(10)
         public_ip = create_instance(keyname)
         print(public_ip)
-        send_cmd(public_ip, 'sudo apt update -y')
-        send_cmd(public_ip, 'sudo apt upgrade -y')
-        send_cmd(public_ip, 'sudo apt install docker.io -y')
+        key = keyname +'.pem'
+        send_cmd(key, public_ip, 'sudo apt update -y')
+        send_cmd(key, public_ip, 'sudo apt upgrade -y')
+        send_cmd(key, public_ip, 'sudo apt install docker.io -y')
             
     # API
         # Inside of create_instance method:

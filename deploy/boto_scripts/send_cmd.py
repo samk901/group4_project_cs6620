@@ -5,11 +5,11 @@ import paramiko
 ec2 = boto3.resource('ec2')
 
 
-def send_cmd(ip, cmd):
+def send_cmd(key, ip, cmd):
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    privkey = paramiko.RSAKey.from_private_key_file('final_project_key.pem')
-    ssh.connect(ip ,username='ec2-user',pkey=privkey)
+    privkey = paramiko.RSAKey.from_private_key_file(key)
+    ssh.connect(ip ,username='ubuntu',pkey=privkey)
     stdin, stdout, stderr = ssh.exec_command(cmd)
     stdin.flush()
     data = stdout.read().splitlines()
