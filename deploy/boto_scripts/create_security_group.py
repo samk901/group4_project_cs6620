@@ -46,7 +46,7 @@ def create_sg():
 
     except botocore.exceptions.ClientError as e:
         print(e)
-        continue
+        pass
 
     # return sg
 
