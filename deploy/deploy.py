@@ -20,7 +20,7 @@ from boto_scripts.create_key_pair import create_pem
 from boto_scripts.create_instance import create_instance
 from boto_scripts.send_cmd import send_cmd
 from boto_scripts.create_security_group import create_sg
-from boto_scripts.create_iam_access import create_iam_access
+from boto_scripts.create_iam_policy import create_iam_policy
 from os import system
 
 def deploy():
