@@ -10,7 +10,7 @@ def create_instance(pem_key):
 
 	try:
 		instance = ec2.create_instances(
-#		ImageId = 'ami-033b95fb8079dc481',
+		#ImageId = 'ami-033b95fb8079dc481',
                 # switched it to ubuntu...
                 ImageId = 'ami-0e472ba40eb589f49',
 		MinCount = 1,
