@@ -57,7 +57,7 @@ def deploy():
         #not sure if this is needed but sometimes it doesnt connect when it sees remote host for first time
         system('ssh -i '+ key + 'ubuntu@' + public_ip)
         system('yes')
-        syestem('exit')
+        system('exit')
 
         #send_cmd(key, public_ip, 'mkdir test')
         send_cmd(key, public_ip, 'sudo apt update -y')
