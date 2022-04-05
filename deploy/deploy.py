@@ -45,8 +45,8 @@ def deploy():
         public_ip = create_instance(keyname)
         print('DB Instance IP:', public_ip)
         key = keyname +'.pem'
-        send_cmd(key, public_ip, 'sudo yum update -y')
-        send_cmd(key, public_ip, 'sudo yum upgrade -y')
+        send_cmd(key, public_ip, 'sudo apt update -y')
+#        send_cmd(key, public_ip, 'sudo yum upgrade -y')
         send_cmd(key, public_ip, 'sudo yum install docker.io -y')
             
     # API

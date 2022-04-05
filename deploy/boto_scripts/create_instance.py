@@ -10,9 +10,9 @@ def create_instance(pem_key):
 
 	try:
 		instance = ec2.create_instances(
-		ImageId = 'ami-033b95fb8079dc481',
+		#ImageId = 'ami-033b95fb8079dc481',
                 # switched it to ubuntu...
-                #ImageId = 'ami-0e472ba40eb589f49',
+                ImageId = 'ami-0e472ba40eb589f49',
 		MinCount = 1,
 		MaxCount = 1,
 		InstanceType = 't2.micro',
@@ -28,7 +28,7 @@ def create_instance(pem_key):
                                 ]
                    },
               	],
-		BlockDeviceMappings=[{"DeviceName": "/dev/xvda","Ebs" : { "VolumeSize" : 10 }}]
+		BlockDeviceMappings=[{"DeviceName": "/dev/sda1","Ebs" : { "VolumeSize" : 10 }}]
 		)
 		instance[0].wait_until_running()
 		instance[0].load()
