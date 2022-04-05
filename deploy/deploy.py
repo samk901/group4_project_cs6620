@@ -45,9 +45,12 @@ def deploy():
         public_ip = create_instance(keyname)
         print('DB Instance IP:', public_ip)
         key = keyname +'.pem'
-        send_cmd(key, public_ip, 'mkdir test')
+        #send_cmd(key, public_ip, 'mkdir test')
         send_cmd(key, public_ip, 'sudo apt update -y')
-        send_cmd(key, public_ip, 'sudo yum install docker.io -y')
+        send_cmd(key, public_ip, 'sudo apt install docker.io -y')
+        send_cmd(key, public_ip, 'sudo docker pull mongo')
+        send_cmd(key, public_ip, 'sudo docker run -p 27017:27017 --name some-mongo -d mongo')
+        print('Try connecting at mongodb://'+public_ip)
             
     # API
         # Inside of create_instance method:
