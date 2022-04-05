@@ -28,7 +28,7 @@ def create_instance(pem_key):
                                 ]
                    },
               	],
-		BlockDeviceMappings=[{"DeviceName": "/dev/xvda","Ebs" : { "VolumeSize" : 10 }}]
+		BlockDeviceMappings=[{"DeviceName": "/dev/sda1","Ebs" : { "VolumeSize" : 10 }}]
 		)
 		instance[0].wait_until_running()
 		instance[0].load()
