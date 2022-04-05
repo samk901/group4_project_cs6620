@@ -19,7 +19,7 @@ import json
 from boto_scripts.create_key_pair import create_pem
 from boto_scripts.create_instance import create_instance
 from boto_scripts.send_cmd import send_cmd
-
+from boto_scripts.create_security_group import create_sg
 
 def deploy():
     # Initialize VPC, return vpc_id
@@ -27,7 +27,8 @@ def deploy():
 
 
         # Create security group here
-    
+        create_sg()
+
         # Create ssh key
         keyname = create_pem()
         
