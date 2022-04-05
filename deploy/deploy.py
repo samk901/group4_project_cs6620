@@ -31,7 +31,7 @@ def deploy():
 
         # Create ssh key
         keyname = create_pem()
-        
+        print('Created key', keyname+'.pem')        
     # DATABASE METHOD-> Mongo Docker
         # Reference: https://hub.docker.com/_/mongo
         # create security group using vpc_id (open port 27017 to all ips or just the api loadbalancer ip?)
