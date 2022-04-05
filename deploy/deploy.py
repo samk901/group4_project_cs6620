@@ -41,7 +41,7 @@ def deploy():
         # docker run --name some-mongo -d mongo:tag
 
         # Create instance to load mongo onto
-        public_ip = create_instance(keyname)
+        public_ip = create_instance('/boto_scripts/'+keyname)
         print(public_ip)
     
     # API
