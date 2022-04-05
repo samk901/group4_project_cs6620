@@ -16,9 +16,8 @@
 import boto3
 import os
 import json
-from boto_scripts.create_iam_policy import create_iam_policy
-from boto_scripts.create_docdb_cluster import create_cluster
-from boto_scripts.create_docdb_instance import create_cluster_instance
+from boto_scripts.create_key_pair import create_pem
+from boto_scripts.create_instance import create_instance
 
 
 
@@ -31,7 +30,7 @@ def deploy():
         #create_iam_policy()
     
         # Create ssh key
-        keyname = create_key_pair()
+        keyname = create_pem()
         
     # DATABASE METHOD-> Mongo Docker
         # Reference: https://hub.docker.com/_/mongo

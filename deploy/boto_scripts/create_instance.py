@@ -36,4 +36,4 @@ def create_instance(pem_key):
 	except botocore.exceptions.ClientError as e:
 		print(e)
 
-create_instance()
+#create_instance()
