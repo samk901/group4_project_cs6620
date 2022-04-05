@@ -30,9 +30,9 @@ def create_instance(pem_key):
               	],
 		BlockDeviceMappings=[{"DeviceName": "/dev/xvda","Ebs" : { "VolumeSize" : 10 }}]
 		)
-                instance[0].wait_until_running()
-                instance[0].load()
-                return instance[0].public_ip_address
+        instance[0].wait_until_running()
+        instance[0].load()
+        return instance[0].public_ip_address
 	except botocore.exceptions.ClientError as e:
 		print(e)
 
