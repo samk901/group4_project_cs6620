@@ -5,7 +5,7 @@ def create_sg():
     
     try:
         ec2 = boto3.resource('ec2')
-        sg = ec2.create_security_group(GroupName="SecurityGroupName", Description='SecurityGroupDescription', TagSpecifications=[
+        sg = ec2.create_security_group(GroupName="SecurityGroupNamei_finalproj", Description='SecurityGroupDescription', TagSpecifications=[
                                                                                                         {'ResourceType': 'security-group',
                                                                                                          'Tags': [{'Key': 'SgTagKey', 'Value': 'SgTagVal'}]
                                                                                                         }
