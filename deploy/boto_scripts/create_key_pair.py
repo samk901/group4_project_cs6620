@@ -1,14 +1,10 @@
 import boto3
 
 def create_pem():
-    try:
-        ec2 = boto3.client('ec2')
-        keyname = 'final_project_' + ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
-        response = ec2.create_key_pair(KeyName=keyname)
-        #print(response.keys())
-        with open('./'+keyname+'.pem', 'w') as file:
-            file.write(response.get('KeyMaterial'))
-        return keyname + '.pem'
-    except:
-        print('Error creating key')
+    ec2 = boto3.client('ec2')
+    response = ec2.create_key_pair(KeyName='final_project_key')
+    #print(response.keys())
+    with open('./final_project_key.pem', 'w') as file:
+        file.write(response.get('KeyMaterial'))
+create_pem()
 
