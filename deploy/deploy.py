@@ -20,10 +20,15 @@ from boto_scripts.create_key_pair import create_pem
 from boto_scripts.create_instance import create_instance
 from boto_scripts.send_cmd import send_cmd
 from boto_scripts.create_security_group import create_sg
+from boto_scripts.create_iam_access import create_iam_access
+from os import system
 
 def deploy():
     # Initialize VPC, return vpc_id
         # vpc_id = create_vpc()
+
+        #fixing some ec2 access errors...
+        create_iam_access()
 
 
         # Create security group here
@@ -45,6 +50,12 @@ def deploy():
         public_ip = create_instance(keyname)
         print('DB Instance IP:', public_ip)
         key = keyname +'.pem'
+        
+        #not sure if this is needed but sometimes it doesnt connect when it sees remote host for first time
+        system('ssh -i '+ key + 'ubuntu@' + public_ip)
+        system('yes')
+        syestem('exit')
+
         #send_cmd(key, public_ip, 'mkdir test')
         send_cmd(key, public_ip, 'sudo apt update -y')
         send_cmd(key, public_ip, 'sudo apt install docker.io -y')

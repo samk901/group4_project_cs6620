@@ -13,10 +13,10 @@ def create_iam_policy():
     "Version": "2012-10-17",
     "Statement": [
     {
-    "Sid": "AmazonDocDBFullAccess",
+    "Sid": "AmazonFullAccess",
     "Effect": "Allow",
     "Action": [
-    "rds:AmazonDocDBFullAccess"
+    "rds:AmazonEC2FullAccess"
     ],
     "Resource": "*"
     }
@@ -24,7 +24,7 @@ def create_iam_policy():
     }
 
     response = iam.create_policy(
-        PolicyName='testDynamoDBPolicy2',
+        PolicyName='ec2access',
         PolicyDocument=json.dumps(my_managed_policy)
         )
     print(response)
