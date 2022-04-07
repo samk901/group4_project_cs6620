@@ -34,8 +34,8 @@ def create_instance(pem_key):
 		instance_id = instance[0].id
 		instance[0].wait_until_running()
 		instance[0].load()
-				waiter=ec2.get_waiter('instance_running')
-				waiter.wait(InstanceIds=[instance_id])
+		waiter=ec2.get_waiter('instance_running')
+		waiter.wait(InstanceIds=[instance_id])
 		return instance[0].public_ip_address
 	except botocore.exceptions.ClientError as e:
 		print(e)
