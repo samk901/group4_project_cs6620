@@ -107,7 +107,8 @@ def create_listener(target_group_arn, load_balancer_arn):
     else:
         return response
 
-#This method is not written yet
+#This method is not written yet.  Whether in this script or a separate script, we need to update the security group associated with the 
+# our EC2 instances to only allow incoming traffic from the load balancer
 def allow_ec2_incoming_traffic_only_from_load_balancer(ec2_instance_security_group_id, ec2_security_group_rule_id, load_balancer_security_group_id):
 
     ec2_client = boto3.client('ec2')
