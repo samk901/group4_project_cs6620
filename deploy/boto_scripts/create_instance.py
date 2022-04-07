@@ -31,7 +31,7 @@ def create_instance(pem_key):
 		SecurityGroups=['final_project'],
                 BlockDeviceMappings=[{"DeviceName": "/dev/sda1","Ebs" : { "VolumeSize" : 10 }}]
 		)
-                instance_id = instance[0].id
+		instance_id = instance[0].id
 		instance[0].wait_until_running()
 		instance[0].load()
 				waiter=ec2.get_waiter('instance_running')
