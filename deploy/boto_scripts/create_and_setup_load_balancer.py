@@ -65,7 +65,6 @@ def create_target_group(vpc_id):
     except botocore.exceptions.ClientError as e:
         print(e)
     else:
-        #print(list(tg.values())[0][0].get('TargetGroupArn'))
         return tg
 
 #Can call this method for each ec2 instance we have
