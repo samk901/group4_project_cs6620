@@ -1,3 +1,8 @@
+#Used https://www.youtube.com/watch?v=OGEZn50iUtE as a reference which describes how to manually create load balancer from AWS console
+
+#Last step (not yet implemented) will be to adjust security group so that only load balancer is allowed to access ec2 instances (so http traffic cannot directly hit ec2 instance)
+
+
 import boto3
 import botocore
 
@@ -110,12 +115,12 @@ def main():
 
     load_balancer_security_group = create_load_balancer_security_group('vpc-08a8476b32003e8d3') #Temporary testing with my VPC_ID, will use vpc_id we generate
     load_balancer = create_load_balancer(load_balancer_security_group.id, [
-        'subnet-073cd7a90757fd3a4',
+        'subnet-073cd7a90757fd3a4', #Temporary using these two subnets, we can update based on our setup
         'subnet-0e7ef3710998198bc',
     ]) 
-    target_group = create_target_group('vpc-08a8476b32003e8d3') #Tempoary testing with my VPC_ID, will use vpc_id we generate
+    target_group = create_target_group('vpc-08a8476b32003e8d3') #Temporary testing with my VPC_ID, will use vpc_id we generate
     registered_target = register_ec2_instance_with_target_group(list(target_group.values())[0][0].get('TargetGroupArn'), 'i-0e53508f76ae0d3f2') #Temporary testing with a hard-coded instance ID, will use instance ID we generate
-    #listener = create_listener(list(target_group.values())[0][0].get('TargetGroupArn'), GET_LOAD_BALANCER_ARN) Have not tested yet
+    listener = create_listener(list(target_group.values())[0][0].get('TargetGroupArn'), list(load_balancer.values())[0][0].get('LoadBalancerArn'))
 
 if __name__ == "__main__":
     main()
