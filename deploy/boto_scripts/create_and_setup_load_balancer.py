@@ -131,7 +131,7 @@ def main():
     ]) 
     target_group = create_target_group('vpc-08a8476b32003e8d3') #Temporary testing with my VPC_ID, will use vpc_id we generate
     registered_target = register_ec2_instance_with_target_group(list(target_group.values())[0][0].get('TargetGroupArn'), 'i-0e53508f76ae0d3f2') #Temporary testing with a hard-coded instance ID, will use instance ID we generate
-    listener = create_listener(list(target_group.values())[0][0].get('TargetGroupArn'), list(load_balancer.values())[0][0].get('LoadBalancerArn')) #There is probably a much easier syntax to extra the 'TargetGroupArn' and 'LoadBalancerArn'  
+    listener = create_listener(list(target_group.values())[0][0].get('TargetGroupArn'), list(load_balancer.values())[0][0].get('LoadBalancerArn')) #There is probably a much simpler syntax to extract 'TargetGroupArn' and 'LoadBalancerArn'  
     #allow_ec2_incoming_traffic_only_from_load_balancer('sg-0c39bc5d60f0ed09a', 'sg-08f945743f8d8bdec')
 
 if __name__ == "__main__":
