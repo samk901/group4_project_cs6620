@@ -26,11 +26,11 @@ sudo systemctl status mongod
 
 # Execute Mongo Script to initialize database
 echo "==> Running init.mongo.js...Expect to see 2 issues inserted"
-mongo /home/ec2-user/group4_project_cs6620/tracker-api/scripts/init.mongo.js
+mongo issuetracker /home/ec2-user/group4_project_cs6620/tracker-api/scripts/init.mongo.js
 
 # Execute Mongo Script to generate database data
 echo "==> Running generate_data.mongo.js...Expect to see issue count of 102"
-mongo /home/ec2-user/group4_project_cs6620/tracker-api/scripts/generate_data.mongo.js
+mongo issuetracker /home/ec2-user/group4_project_cs6620/tracker-api/scripts/generate_data.mongo.js
 
 
 
