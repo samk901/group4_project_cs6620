@@ -22,6 +22,11 @@ export NVM_DIR
 curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash   # Make nvm command available to terminal
 source ~/.bashrc
 
+# Allows user to use nvm without reopening terminal
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 echo "==> Installing node js version $INSTALL_NODE_VER"
 nvm install $INSTALL_NODE_VER
 
@@ -29,10 +34,5 @@ nvm install $INSTALL_NODE_VER
 echo "==> Make this version system default"
 nvm alias default $INSTALL_NODE_VER
 nvm use default
-
-# Allows user to use nvm without reopening terminal
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 
