@@ -22,49 +22,43 @@ from boto_scripts.send_cmd import send_cmd
 from boto_scripts.create_security_group import create_sg
 from boto_scripts.create_iam_policy import create_iam_policy
 from os import system
+from read_script import read_script
 
 def deploy():
     # Initialize VPC, return vpc_id
         # vpc_id = create_vpc()
 
-        #fixing some ec2 access errors...
-        try:
-            
-            create_iam_policy()
-        except:
-            pass
-
+        #Iam Policy   
+        create_iam_policy()
+        
         # Create security group here
         create_sg()
 
         # Create ssh key
         keyname = create_pem()
-        print('Created key', keyname+'.pem')        
-    # DATABASE METHOD-> Mongo Docker
-        # Reference: https://hub.docker.com/_/mongo
-        # create security group using vpc_id (open port 27017 to all ips or just the api loadbalancer ip?)
-        # create ec2 instance, return ip address
-        # sudo apt install docker via top link of this file
-        # sudo docker pull mongo
-        # docker run --name some-mongo -d mongo:tag
-
-        # Create instance to load mongo onto
-#        time.sleep(10)
-        public_ip = create_instance(keyname)
-        print('DB Instance IP:', public_ip)
         key = keyname +'.pem'
-        
-        #not sure if this is needed but sometimes it doesnt connect when it sees remote host for first time
-        #system('ssh -i '+ key + 'ubuntu@' + public_ip)
-        #system('yes')
-        #system('exit')
+        print('Created key', key)     
 
-        #send_cmd(key, public_ip, 'mkdir test')
-        send_cmd(key, public_ip, 'sudo apt update -y')
-        send_cmd(key, public_ip, 'sudo apt install docker.io -y')
-        send_cmd(key, public_ip, 'sudo docker pull mongo')
-        send_cmd(key, public_ip, 'sudo docker run -p 27017:27017 --name some-mongo -d mongo')
-        print('Try connecting at mongodb://'+public_ip)
+        # Create db instance
+        db_ip = create_instance(keyname) 
+        print('DB Instance IP:', db_ip)
+
+
+    # DATABASE METHOD-> Mongo Docker
+    #    # Reference: https://hub.docker.com/_/mongo
+    #    public_ip = create_instance(keyname)
+    #    print('DB Instance IP:', public_ip)
+    #    send_cmd(key, public_ip, 'sudo apt update -y')
+    #    send_cmd(key, public_ip, 'sudo apt install docker.io -y')
+    #    send_cmd(key, public_ip, 'sudo docker pull mongo')
+    #    send_cmd(key, public_ip, 'sudo docker run -p 27017:27017 --name some-mongo -d mongo')
+    #    print('Try connecting at mongodb://'+public_ip)
+
+    # DATABASE METHOD-> Mongo directly on instance
+        cmds = read_script('../install_scripts/mongo_install.sh')
+        for cmd in cmds:
+            send_cmd(key, db_ip, cmd)
+        print('Try connecting at mongodb://'+db_ip)
             
     # API
         # Inside of create_instance method:
