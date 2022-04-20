@@ -19,9 +19,8 @@ rm -rf ~/.nvm
 export NVM_DIR
 
 # Install NVM
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v$INSTALL_NVM_VER/install.sh | bash
-# Make nvm command available to terminal
-source ~/.nvm/nvm.sh
+curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash   # Make nvm command available to terminal
+source ~/.bashrc
 
 echo "==> Installing node js version $INSTALL_NODE_VER"
 nvm install $INSTALL_NODE_VER
