@@ -28,6 +28,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
+. ~/.nvm/nvm.sh
+
 echo "==> Installing node js version $INSTALL_NODE_VER"
 nvm install $INSTALL_NODE_VER
 
