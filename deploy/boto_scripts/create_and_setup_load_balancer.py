@@ -107,46 +107,25 @@ def create_listener(target_group_arn, load_balancer_arn):
     else:
         return response
 
-#Whether in this script or a separate script, we need to initially create (or update) the security group associated with
+#Moving this to create_secuirty_group.py. Initially create the security group associated with
 # our EC2 instances to only allow incoming traffic from the load balancer.  Don't want to allow direct http traffic to ec2 instances
-def testing_secruity_group_with_traffic_only_allowed_from_load_balancer():
+def create_secruity_group_with_traffic_only_allowed_from_load_balancer():
+    #Method moved to create_security_group.py file
+    return True
 
-    try:
-        ec2 = boto3.resource('ec2')
-        sg = ec2.create_security_group(GroupName="testing_sg_group", Description='Testing123', TagSpecifications=[
-                                                                                                        {'ResourceType': 'security-group',
-                                                                                                         'Tags': [{'Key': 'SgTagKey', 'Value': 'SgTagVal'}]
-                                                                                                        }
-                                                                                                          ])
-        
-        sg.authorize_ingress(
-            IpPermissions=[{
-                'IpProtocol': 'tcp',
-                'FromPort': 80,
-                'ToPort': 80,
-                'UserIdGroupPairs': [{
-                    'GroupId': 'sg-0abe12d6651793059'
-                }]
-            }]
-        )
-
-    except botocore.exceptions.ClientError as e:
-        print(e)
-        pass
 
 def main():
 
-    # load_balancer_security_group = create_load_balancer_security_group('vpc-08a8476b32003e8d3') #Temporary testing with my VPC_ID, will use vpc_id we generate
-    # load_balancer = create_load_balancer(load_balancer_security_group.id, [
-    #     'subnet-073cd7a90757fd3a4', #Temporary using these two subnets, we can update based on our setup
-    #     'subnet-0e7ef3710998198bc',
-    # ]) 
-    # target_group = create_target_group('vpc-08a8476b32003e8d3') #Temporary testing with my VPC_ID, will use vpc_id we generate
-    # registered_target1 = register_ec2_instance_with_target_group(list(target_group.values())[0][0].get('TargetGroupArn'), 'i-008b7ba987ee8d6ea') #Temporary testing with a hard-coded instance ID, will use instance ID we generate
-    # registered_target2 = register_ec2_instance_with_target_group(list(target_group.values())[0][0].get('TargetGroupArn'), 'i-0ce79f06373a78937')
-    # registered_target3 = register_ec2_instance_with_target_group(list(target_group.values())[0][0].get('TargetGroupArn'), 'i-0e155ee770df0dbe5')
-    # listener = create_listener(list(target_group.values())[0][0].get('TargetGroupArn'), list(load_balancer.values())[0][0].get('LoadBalancerArn')) #There is probably a much simpler syntax to extract 'TargetGroupArn' and 'LoadBalancerArn'  
-    testing_secruity_group_with_traffic_only_allowed_from_load_balancer()
+    load_balancer_security_group = create_load_balancer_security_group('vpc-08a8476b32003e8d3') #Temporary testing with my VPC_ID, will use vpc_id we generate
+    load_balancer = create_load_balancer(load_balancer_security_group.id, [
+        'subnet-073cd7a90757fd3a4', #Temporary using these two subnets, we can update based on our setup
+        'subnet-0e7ef3710998198bc',
+    ]) 
+    target_group = create_target_group('vpc-08a8476b32003e8d3') #Temporary testing with my VPC_ID, will use vpc_id we generate
+    registered_target1 = register_ec2_instance_with_target_group(list(target_group.values())[0][0].get('TargetGroupArn'), 'i-008b7ba987ee8d6ea') #Temporary testing with a hard-coded instance ID, will use instance ID we generate
+    registered_target2 = register_ec2_instance_with_target_group(list(target_group.values())[0][0].get('TargetGroupArn'), 'i-0ce79f06373a78937')
+    registered_target3 = register_ec2_instance_with_target_group(list(target_group.values())[0][0].get('TargetGroupArn'), 'i-0e155ee770df0dbe5')
+    listener = create_listener(list(target_group.values())[0][0].get('TargetGroupArn'), list(load_balancer.values())[0][0].get('LoadBalancerArn')) #There is probably a much simpler syntax to extract 'TargetGroupArn' and 'LoadBalancerArn'  
 
 if __name__ == "__main__":
     main()
