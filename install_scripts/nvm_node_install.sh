@@ -9,7 +9,7 @@ UIDIR=/tracker-ui
 INSTALL_NODE_VER=10.24.0
 INSTALL_NVM_VER=0.35.3
 
-echo "==> ENsuring .bashrc exists and is writable"
+echo "==> Ensuring .bashrc exists and is writable"
 touch ~/.bashrc
 
 echo "==> INstalling node version manager (NVM). Version $INSTALL_NVM_VER"
@@ -19,9 +19,16 @@ rm -rf ~/.nvm
 export NVM_DIR
 
 # Install NVM
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v$INSTALL_NVM_VER/install.sh | bash
-# Make nvm command available to terminal
-source ~/.nvm/nvm.sh
+curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash   # Make nvm command available to terminal
+source ~/.bashrc
+. ~/.nvm/nvm.sh
+
+# Allows user to use nvm without reopening terminal
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+. ~/.nvm/nvm.sh
 
 echo "==> Installing node js version $INSTALL_NODE_VER"
 nvm install $INSTALL_NODE_VER
@@ -30,6 +37,5 @@ nvm install $INSTALL_NODE_VER
 echo "==> Make this version system default"
 nvm alias default $INSTALL_NODE_VER
 nvm use default
-
 
 
