@@ -31,7 +31,9 @@ def deploy():
     #Iam Policy   
     create_iam_policy()
 
-    # Create security group here
+    #Create load balancer security group
+
+    # Create security group for ec2 instances
     create_sg()
 
     # Create ssh key
