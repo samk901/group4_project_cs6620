@@ -88,6 +88,8 @@ def deploy():
         #    tag = create_instance()
         #    tags.append(tag)
 
+
+    #Create and setup api load balacer.  TODO: Jeff to refactor to reduce the number of below lines, keep the logic in load balancer script
     load_balancer_api = create_load_balancer(load_balancer_security_group.id, [
         'subnet-073cd7a90757fd3a4', #TODO: Double check how we will get the subnets to pass in here
         'subnet-0e7ef3710998198bc',
@@ -108,6 +110,8 @@ def deploy():
             # docker build via send_cmd
             # docker run, pass in dns of api load balancer using -e flag and any other needed
         # Repeat as X times
+
+    #Create and setup ui load balacer.  TODO: Jeff to refactor to reduce the number of below lines, keep the logic in load balancer script
     load_balancer_ui = create_load_balancer(load_balancer_security_group.id, [
         'subnet-073cd7a90757fd3a4', #TODO: Double check how we will get the subnets to pass in here
         'subnet-0e7ef3710998198bc',
