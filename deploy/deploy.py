@@ -19,8 +19,9 @@ import json
 from boto_scripts.create_key_pair import create_pem
 from boto_scripts.create_instance import create_instance
 from boto_scripts.send_cmd import send_cmd, connect_ssh, close_ssh
-from boto_scripts.create_security_group import create_sg
+from boto_scripts.create_security_group import create_security_group
 from boto_scripts.create_iam_policy import create_iam_policy
+from boto_scripts.create_and_setup_load_balancer import create_load_balancer_security_group, create_load_balancer, create_target_group, register_ec2_instance_with_target_group, create_listener
 from os import system
 from read_script import read_script
 
@@ -31,10 +32,11 @@ def deploy():
     #Iam Policy   
     create_iam_policy()
 
-    #Create load balancer security group
+    #Create load balancer security group.  This will be used for both API load balancer and UI load balancer
+    load_balancer_security_group = create_load_balancer_security_group(vpc_id)
 
-    # Create security group for ec2 instances
-    create_sg()
+    # Create security group for ec2 instances.  Only allows ingress http traffic from load balancers
+    create_security_group('Security group for ec2 instances', 'Security group for web and application ec2 instances', load_balancer_security_group.id)
 
     # Create ssh key
     keyname = create_pem()
@@ -86,9 +88,15 @@ def deploy():
         #    tag = create_instance()
         #    tags.append(tag)
 
-        # create load balancer -> turns multiple instances into one public dns we can ref
-        # Reference: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/elb.html#ElasticLoadBalancing.Client.create_load_balancer, return public dns address
-        # dns = create_load_balancer(tags)
+        load_balancer_api = create_load_balancer(load_balancer_security_group.id, [
+            'subnet-073cd7a90757fd3a4', #TODO: Double check how we will get the subnets to pass in here
+            'subnet-0e7ef3710998198bc',
+        ])
+        target_group_api = create_target_group(vpc_id) 
+        registered_target1_api = register_ec2_instance_with_target_group(list(target_group_api.values())[0][0].get('TargetGroupArn'), 'i-008b7ba987ee8d6ea') #TODO: Replace ec2 instance ID here with one we generate
+        registered_target2_api = register_ec2_instance_with_target_group(list(target_group_api.values())[0][0].get('TargetGroupArn'), 'i-0ce79f06373a78937') #TODO: Replace ec2 instance ID here with one we generate
+        listener_api = create_listener(list(target_group_api.values())[0][0].get('TargetGroupArn'), list(load_balancer_api.values())[0][0].get('LoadBalancerArn'))
+        #Get dns of api load balancer and set this ip as domain for API calls
 
 
 
@@ -99,9 +107,15 @@ def deploy():
             # docker build via send_cmd
             # docker run, pass in dns of api load balancer using -e flag and any other needed
         # Repeat as X times
-        # Add load balancer on top so we have on dns/ip to connect to
-
-    # return dns or ip of UI
+        load_balancer_ui = create_load_balancer(load_balancer_security_group.id, [
+            'subnet-073cd7a90757fd3a4', #TODO: Double check how we will get the subnets to pass in here
+            'subnet-0e7ef3710998198bc',
+        ])
+        target_group_ui = create_target_group(vpc_id) #Temporary testing with my VPC_ID, will use vpc_id we generate
+        registered_target1_ui = register_ec2_instance_with_target_group(list(target_group_ui.values())[0][0].get('TargetGroupArn'), 'i-008b7ba987ee8d6ea') #TODO: Replace ec2 instance ID here with one we generate
+        registered_target2_ui = register_ec2_instance_with_target_group(list(target_group_ui.values())[0][0].get('TargetGroupArn'), 'i-0ce79f06373a78937') #TODO: Replace ec2 instance ID here with one we generate
+        listener_ui = create_listener(list(target_group_ui.values())[0][0].get('TargetGroupArn'), list(load_balancer_ui.values())[0][0].get('LoadBalancerArn'))
+        #Get dns of api load balancer and set this ip as domain for API calls
 
 
 
