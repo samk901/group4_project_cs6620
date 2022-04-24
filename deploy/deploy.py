@@ -96,7 +96,8 @@ def deploy():
         registered_target1_api = register_ec2_instance_with_target_group(list(target_group_api.values())[0][0].get('TargetGroupArn'), 'i-008b7ba987ee8d6ea') #TODO: Replace ec2 instance ID here with one we generate
         registered_target2_api = register_ec2_instance_with_target_group(list(target_group_api.values())[0][0].get('TargetGroupArn'), 'i-0ce79f06373a78937') #TODO: Replace ec2 instance ID here with one we generate
         listener_api = create_listener(list(target_group_api.values())[0][0].get('TargetGroupArn'), list(load_balancer_api.values())[0][0].get('LoadBalancerArn'))
-        #Get dns of api load balancer and set this ip as domain for API calls
+        load_balancer_api_dns = list(load_balancer_api.values())[0][0].get('DNSName')
+        #TODO: Take this dns value and set it as domain for API calls
 
 
 
@@ -115,7 +116,7 @@ def deploy():
         registered_target1_ui = register_ec2_instance_with_target_group(list(target_group_ui.values())[0][0].get('TargetGroupArn'), 'i-008b7ba987ee8d6ea') #TODO: Replace ec2 instance ID here with one we generate
         registered_target2_ui = register_ec2_instance_with_target_group(list(target_group_ui.values())[0][0].get('TargetGroupArn'), 'i-0ce79f06373a78937') #TODO: Replace ec2 instance ID here with one we generate
         listener_ui = create_listener(list(target_group_ui.values())[0][0].get('TargetGroupArn'), list(load_balancer_ui.values())[0][0].get('LoadBalancerArn'))
-        #Get dns of api load balancer and set this ip as domain for API calls
+        load_balancer_ui_dns = list(load_balancer_ui.values())[0][0].get('DNSName')
 
 
 
