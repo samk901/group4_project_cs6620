@@ -88,16 +88,16 @@ def deploy():
         #    tag = create_instance()
         #    tags.append(tag)
 
-        load_balancer_api = create_load_balancer(load_balancer_security_group.id, [
-            'subnet-073cd7a90757fd3a4', #TODO: Double check how we will get the subnets to pass in here
-            'subnet-0e7ef3710998198bc',
-        ])
-        target_group_api = create_target_group(vpc_id) 
-        registered_target1_api = register_ec2_instance_with_target_group(list(target_group_api.values())[0][0].get('TargetGroupArn'), 'i-008b7ba987ee8d6ea') #TODO: Replace ec2 instance ID here with one we generate
-        registered_target2_api = register_ec2_instance_with_target_group(list(target_group_api.values())[0][0].get('TargetGroupArn'), 'i-0ce79f06373a78937') #TODO: Replace ec2 instance ID here with one we generate
-        listener_api = create_listener(list(target_group_api.values())[0][0].get('TargetGroupArn'), list(load_balancer_api.values())[0][0].get('LoadBalancerArn'))
-        load_balancer_api_dns = list(load_balancer_api.values())[0][0].get('DNSName')
-        #TODO: Take this dns value and set it as domain for API calls
+    load_balancer_api = create_load_balancer(load_balancer_security_group.id, [
+        'subnet-073cd7a90757fd3a4', #TODO: Double check how we will get the subnets to pass in here
+        'subnet-0e7ef3710998198bc',
+    ])
+    target_group_api = create_target_group(vpc_id) 
+    registered_target1_api = register_ec2_instance_with_target_group(list(target_group_api.values())[0][0].get('TargetGroupArn'), 'i-008b7ba987ee8d6ea') #TODO: Replace ec2 instance ID here with one we generate
+    registered_target2_api = register_ec2_instance_with_target_group(list(target_group_api.values())[0][0].get('TargetGroupArn'), 'i-0ce79f06373a78937') #TODO: Replace ec2 instance ID here with one we generate
+    listener_api = create_listener(list(target_group_api.values())[0][0].get('TargetGroupArn'), list(load_balancer_api.values())[0][0].get('LoadBalancerArn'))
+    load_balancer_api_dns = list(load_balancer_api.values())[0][0].get('DNSName')
+    #TODO: Take this dns value and set it as domain for API calls
 
 
 
@@ -108,15 +108,15 @@ def deploy():
             # docker build via send_cmd
             # docker run, pass in dns of api load balancer using -e flag and any other needed
         # Repeat as X times
-        load_balancer_ui = create_load_balancer(load_balancer_security_group.id, [
-            'subnet-073cd7a90757fd3a4', #TODO: Double check how we will get the subnets to pass in here
-            'subnet-0e7ef3710998198bc',
-        ])
-        target_group_ui = create_target_group(vpc_id) #Temporary testing with my VPC_ID, will use vpc_id we generate
-        registered_target1_ui = register_ec2_instance_with_target_group(list(target_group_ui.values())[0][0].get('TargetGroupArn'), 'i-008b7ba987ee8d6ea') #TODO: Replace ec2 instance ID here with one we generate
-        registered_target2_ui = register_ec2_instance_with_target_group(list(target_group_ui.values())[0][0].get('TargetGroupArn'), 'i-0ce79f06373a78937') #TODO: Replace ec2 instance ID here with one we generate
-        listener_ui = create_listener(list(target_group_ui.values())[0][0].get('TargetGroupArn'), list(load_balancer_ui.values())[0][0].get('LoadBalancerArn'))
-        load_balancer_ui_dns = list(load_balancer_ui.values())[0][0].get('DNSName')
+    load_balancer_ui = create_load_balancer(load_balancer_security_group.id, [
+        'subnet-073cd7a90757fd3a4', #TODO: Double check how we will get the subnets to pass in here
+        'subnet-0e7ef3710998198bc',
+    ])
+    target_group_ui = create_target_group(vpc_id) #Temporary testing with my VPC_ID, will use vpc_id we generate
+    registered_target1_ui = register_ec2_instance_with_target_group(list(target_group_ui.values())[0][0].get('TargetGroupArn'), 'i-008b7ba987ee8d6ea') #TODO: Replace ec2 instance ID here with one we generate
+    registered_target2_ui = register_ec2_instance_with_target_group(list(target_group_ui.values())[0][0].get('TargetGroupArn'), 'i-0ce79f06373a78937') #TODO: Replace ec2 instance ID here with one we generate
+    listener_ui = create_listener(list(target_group_ui.values())[0][0].get('TargetGroupArn'), list(load_balancer_ui.values())[0][0].get('LoadBalancerArn'))
+    load_balancer_ui_dns = list(load_balancer_ui.values())[0][0].get('DNSName')
 
 
 
