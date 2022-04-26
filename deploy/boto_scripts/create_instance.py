@@ -1,7 +1,7 @@
 import boto3
 import botocore
 
-def create_instance(pem_key):
+def create_instance(pem_key, min_num_of_instances, max_num_of_instances):
 
 	try:
 		ec2 = boto3.resource('ec2')
@@ -13,8 +13,8 @@ def create_instance(pem_key):
 		#ImageId = 'ami-033b95fb8079dc481',
                 # switched it to ubuntu...
                 ImageId = 'ami-0e472ba40eb589f49',
-		MinCount = 1,
-		MaxCount = 1,
+		MinCount = min_num_of_instances,
+		MaxCount = max_num_of_instances,
 		InstanceType = 't2.micro',
 		KeyName = pem_key,
 		TagSpecifications= [
