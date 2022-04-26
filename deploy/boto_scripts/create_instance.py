@@ -31,14 +31,22 @@ def create_instance(pem_key):
 		SecurityGroups=['final_project'],
                 BlockDeviceMappings=[{"DeviceName": "/dev/sda1","Ebs" : { "VolumeSize" : 10 }}]
 		)
-		instance_id = instance[0].id
-		print('please wait while instance is being created..')
-		instance[0].wait_until_running()
-		instance[0].load()
-		waiter=boto3.client('ec2').get_waiter('instance_status_ok')
-		waiter.wait(InstanceIds=[instance_id])
-		print('instance is ready')
-		return instance[0].public_ip_address
+		
+	ip_addresses = []
+        for instance_num in range(max_num_of_instances):
+            try:
+                instance_id = instance[instance_num].id
+                print('please wait while instance is being created..')
+                instance[instance_num].wait_until_running()
+                instance[instance_num].load()
+                waiter = boto3.client('ec2').get_waiter('instance_status_ok')
+                waiter.wait(InstanceIds=[instance_id])
+                print('instance is ready')
+                ip_addresses.append(instance[instance_num].public_ip_address)
+            except:
+                continue
+        return ip_addresses
+		
 	except botocore.exceptions.ClientError as e:
 		print(e)
 
