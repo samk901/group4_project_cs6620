@@ -1,11 +1,14 @@
 # Pull Node image from Docker Hub
 FROM node:14-slim
 
-#Setting Working Directory
-WORKDIR /usr/app
+##Setting Working Directory
+#WORKDIR /usr/app
 
 # Copying only package.json
-COPY package*.json ./
+COPY group4_project_cs6620/tracker-api tracker-api
+#COPY group4_project_cs6620/tracker-api/package.json ./
+
+WORKDIR tracker-api
 
 # Install Dependencies
 RUN npm install
