@@ -2,18 +2,12 @@
 FROM node:14-slim
 
 # Setting Working Directory
-WORKDIR /usr/app
+COPY group4_project_cs6620/tracker-ui/package.json package.json
+COPY group4_project_cs6620/tracker-ui tracker-ui
 
-# Copying only package.json
-COPY package*.json ./
-
-# Install Dependencies
+WORKDIR tracker-ui
 RUN npm install
-
-# Copy rest of the code to container
-COPY . .
-
 EXPOSE 3000
-
-# Run the React App
-CMD ["npm", "run","dev-all" ]
+RUN npm update
+RUN npm run compile
+CMD ["npm", "start" ]
