@@ -82,7 +82,15 @@ def deploy():
             # sudo apt install docker
             # docker build
             # docker run, pass in mongo_db_endpoint via -e flag
-        
+    # to do test
+    ssh = connect_ssh(key, db_ip)
+    send_cmd(ssh, 'sudo apt update -y')
+    send_cmd(ssh, 'sudo apt-get install -y nodejs')
+    send_cmd(ssh, 'sudo apt-get install -y nodejs')
+    send_cmd(ssh, 'sh nvm_node_install.sh')
+    close_ssh(ssh)
+
+
         # tags = []
         #for x in range(3):
         #    tag = create_instance()
@@ -110,6 +118,7 @@ def deploy():
             # docker build via send_cmd
             # docker run, pass in dns of api load balancer using -e flag and any other needed
         # Repeat as X times
+        # to do test
 
     #Create and setup ui load balacer.  TODO: Jeff to refactor to reduce the number of below lines, keep the logic in load balancer script
     load_balancer_ui = create_load_balancer(load_balancer_security_group.id, [
