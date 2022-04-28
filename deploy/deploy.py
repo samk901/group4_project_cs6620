@@ -44,8 +44,8 @@ def deploy():
     print('Created key', key)     
 
     # Create db instance
-    db_ip = create_instance(keyname) 
-    print('DB Instance IP:', db_ip)
+    db_ip = create_instance(keyname, 1, 1)
+    print('DB Instance IP(s):', db_ip)
 
 
     # DATABASE METHOD-> Mongo Docker
