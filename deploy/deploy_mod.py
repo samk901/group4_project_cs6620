@@ -7,9 +7,12 @@ from boto_scripts.create_and_setup_load_balancer import create_load_balancer_sec
 from boto_scripts.create_iam_policy import create_iam_policy
 from boto_scripts.create_servers import create_db_server, create_api_server, create_ui_server
 from boto_scripts.get_vpc_and_subnet_info import get_vpc_info, get_subnets
+from os import system
 
 
 def deploy():
+
+    system('pip3 install paramiko')
 
     #Get default VpcId and first two subnets, which will be used in the script
     vpc_id = get_vpc_info()
