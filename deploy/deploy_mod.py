@@ -56,7 +56,7 @@ def deploy():
     # print('Try connecting at', 'http://' + api_ip1 + ':3000/graphql')
 
     load_balancer_api = create_load_balancer(load_balancer_security_group.id, [
-        'subnet-073cd7a90757fd3a4', #TODO: Double check how we will get the subnets to pass in here
+        'subnet-073cd7a90757fd3a4', #TODO: Update to dynamic
         'subnet-0e7ef3710998198bc',
     ], 'api_load_balancer')
     target_group_api = create_target_group(vpc_id, 'api_load_balancer_target_group') 
@@ -72,7 +72,7 @@ def deploy():
     # print('Try connecting at', 'http://' + ui_ip1 +':3000')
 
     load_balancer_ui = create_load_balancer(load_balancer_security_group.id, [
-        'subnet-073cd7a90757fd3a4', #TODO: Double check how we will get the subnets to pass in here
+        'subnet-073cd7a90757fd3a4', #TODO: update to dynamic
         'subnet-0e7ef3710998198bc',
     ], 'ui_load_balancer')
     target_group_ui = create_target_group(vpc_id, 'ui_load_balancer_target_group') #Temporary testing with my VPC_ID, will use vpc_id we generate
