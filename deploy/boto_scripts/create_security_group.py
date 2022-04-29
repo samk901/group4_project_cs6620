@@ -105,6 +105,6 @@ def create_security_group(sg_name, sg_description, load_balancer_sg_id):
         print(e)
         pass
 
-create_security_group('Server security group', 
-                      'Security group for web and application ec2 instances', 
-                      'sg-0abe12d6651793059')
+# create_security_group('Server security group', 
+#                       'Security group for web and application ec2 instances', 
+#                       'sg-0abe12d6651793059')
