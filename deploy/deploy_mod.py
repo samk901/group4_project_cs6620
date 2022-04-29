@@ -17,8 +17,10 @@ def deploy():
 
     #Create load balancer security group.  This will be used for both API load balancer and UI load balancer
     load_balancer_security_group = create_load_balancer_security_group(vpc_id)
+    print("getting here1")
 
     ec2_instance_security_group = create_security_group('final_project', 'EC2 instance security group', load_balancer_security_group.id)
+    print("getting here2")
 
     # Create ssh key
     keyname = create_pem()
