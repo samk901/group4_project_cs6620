@@ -50,7 +50,7 @@ def deploy():
     create_db_server(key, db_ip)
     print('Try connecting at mongodb://' + db_ip)
 
-    #Create API servers and create/setup load balancer for api servers
+    #Create 2 API servers and create/setup load balancer for api servers
     create_api_server(key, db_ip, api_ip1)
     create_api_server(key, db_ip, api_ip2)
     # print('Try connecting at', 'http://' + api_ip1 + ':3000/graphql')
@@ -66,7 +66,7 @@ def deploy():
     load_balancer_api_dns = list(load_balancer_api.values())[0][0].get('DNSName')
     #----------------------------------------------------------------------------------------------------------------------------------
 
-    #Create UI servers and create/setup load balancer for UI servers
+    #Create 2 UI servers and create/setup load balancer for UI servers
     create_ui_server(key, load_balancer_api_dns, ui_ip1)
     create_ui_server(key, load_balancer_api_dns, ui_ip2)
     # print('Try connecting at', 'http://' + ui_ip1 +':3000')
@@ -76,8 +76,8 @@ def deploy():
         'subnet-0e7ef3710998198bc',
     ])
     target_group_ui = create_target_group(vpc_id) #Temporary testing with my VPC_ID, will use vpc_id we generate
-    registered_target1_ui = register_ec2_instance_with_target_group(list(target_group_ui.values())[0][0].get('TargetGroupArn'), ui_id1) #TODO: Replace ec2 instance ID here with one we generate
-    registered_target2_ui = register_ec2_instance_with_target_group(list(target_group_ui.values())[0][0].get('TargetGroupArn'), ui_id2) #TODO: Replace ec2 instance ID here with one we generate
+    registered_target1_ui = register_ec2_instance_with_target_group(list(target_group_ui.values())[0][0].get('TargetGroupArn'), ui_id1)
+    registered_target2_ui = register_ec2_instance_with_target_group(list(target_group_ui.values())[0][0].get('TargetGroupArn'), ui_id2)
     listener_ui = create_listener(list(target_group_ui.values())[0][0].get('TargetGroupArn'), list(load_balancer_ui.values())[0][0].get('LoadBalancerArn'))
     load_balancer_ui_dns = list(load_balancer_ui.values())[0][0].get('DNSName')
     
