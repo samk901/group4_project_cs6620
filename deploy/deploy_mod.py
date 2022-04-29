@@ -70,7 +70,7 @@ def deploy():
     print('Try connecting at', 'http://' + ui_ip1 +':3000')
     print('Try connecting at', 'http://' + ui_ip2 +':3000')
 
-    load_balancer_ui = create_load_balancer('sg-00ea2d108465f6b25', [
+    load_balancer_ui = create_load_balancer(load_balancer_security_group.id, [
         'subnet-073cd7a90757fd3a4', #TODO: update to dynamic, upload load balancer security group
         'subnet-0e7ef3710998198bc',
     ], 'ui-load-balancer')
