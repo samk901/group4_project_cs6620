@@ -15,12 +15,12 @@ def deploy():
 
     create_iam_policy()
 
-    #Create load balancer security group.  This will be used for both API load balancer and UI load balancer
-    load_balancer_security_group = create_load_balancer_security_group(vpc_id)
-    print("getting here1")
+    # #Create load balancer security group.  This will be used for both API load balancer and UI load balancer
+    # load_balancer_security_group = create_load_balancer_security_group(vpc_id)
+    # print("getting here1")
 
-    ec2_instance_security_group = create_security_group('final_project', 'EC2 instance security group', load_balancer_security_group.id)
-    print("getting here2")
+    # ec2_instance_security_group = create_security_group('final_project', 'EC2 instance security group', load_balancer_security_group.id)
+    # print("getting here2")
 
     # Create ssh key
     keyname = create_pem()
@@ -28,7 +28,7 @@ def deploy():
     print('Created key', key)
 
     # Create db instance
-    # instances = create_instance(keyname, num_instances=3)
+    instances = create_instance(keyname, num_instances=3)
     # db_ip = instances[0].public_ip_address
     # db_id = instances[0].instance_id
 
