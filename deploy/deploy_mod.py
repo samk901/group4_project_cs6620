@@ -1,13 +1,25 @@
 from boto_scripts.create_key_pair import create_pem
 from boto_scripts.create_instance_mod import create_instance
 
-# from boto_scripts.create_security_group import create_security_group
-# from boto_scripts.create_and_setup_load_balancer import create_load_balancer_security_group, create_load_balancer, \
-#     create_target_group, register_ec2_instance_with_target_group, create_listener
+from boto_scripts.create_security_group import create_security_group
+from boto_scripts.create_and_setup_load_balancer import create_load_balancer_security_group, create_load_balancer, \
+    create_target_group, register_ec2_instance_with_target_group, create_listener
+from boto_scripts.create_iam_policy import create_iam_policy
 from boto_scripts.create_servers import create_db_server, create_api_server, create_ui_server
 
 
 def deploy():
+
+
+    vpc_id = 'vpc-08a8476b32003e8d3'
+
+    create_iam_policy()
+
+    #Create load balancer security group.  This will be used for both API load balancer and UI load balancer
+    load_balancer_security_group = create_load_balancer_security_group(vpc_id)
+
+    ec2_instance_security_group = create_security_group('final_project', 'EC2 instance security group', load_balancer_security_group.id)
+
     # Create ssh key
     keyname = create_pem()
     key = keyname + '.pem'
