@@ -27,13 +27,13 @@ def create_load_balancer_security_group(vpc_id):
     else:
         return sg
 
-def create_load_balancer(lb_security_group_id, lb_subnets):
+def create_load_balancer(lb_security_group_id, lb_subnets, lb_name):
 
     try:
         lb_client = boto3.client('elbv2')
 
         lb = lb_client.create_load_balancer(
-            Name='application-load-balancer',
+            Name=lb_name,
             Scheme='internet-facing',
             SecurityGroups=[lb_security_group_id
             ],
@@ -46,13 +46,13 @@ def create_load_balancer(lb_security_group_id, lb_subnets):
     else:
         return lb
 
-def create_target_group(vpc_id):
+def create_target_group(vpc_id, tg_name):
 
     try:
         lb_client = boto3.client('elbv2')
 
         tg = lb_client.create_target_group(
-            Name='application-target-group',
+            Name=tg_name,
             Port=80,
             Protocol='HTTP',
             VpcId=vpc_id,
