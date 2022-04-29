@@ -14,7 +14,7 @@ def get_vpc_info():
 
 def main():
 
-    print(get_vpc_info().Vpcs)
+    print(get_vpc_info().get('Vpcs')[0].get('VpcId'))
 
 if __name__ == "__main__":
     main()
