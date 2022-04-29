@@ -15,7 +15,7 @@ def deploy():
 
     create_iam_policy()
 
-    #Create load balancer security group.  This will be used for both API load balancer and UI load balancer
+    # #Create load balancer security group.  This will be used for both API load balancer and UI load balancer
     # load_balancer_security_group = create_load_balancer_security_group(vpc_id)
 
     # ec2_instance_security_group = create_security_group('final_project', 'EC2 instance security group', load_balancer_security_group.id)
@@ -70,16 +70,16 @@ def deploy():
     print('Try connecting at', 'http://' + ui_ip1 +':3000')
     print('Try connecting at', 'http://' + ui_ip2 +':3000')
 
-    # load_balancer_ui = create_load_balancer(load_balancer_security_group.id, [
-    #     'subnet-073cd7a90757fd3a4', #TODO: update to dynamic
-    #     'subnet-0e7ef3710998198bc',
-    # ], 'ui-load-balancer')
-    # target_group_ui = create_target_group(vpc_id, 'ui-load-balancer-target-group') #Temporary testing with my VPC_ID, will use vpc_id we generate
-    # registered_target1_ui = register_ec2_instance_with_target_group(list(target_group_ui.values())[0][0].get('TargetGroupArn'), ui_id1)
-    # registered_target2_ui = register_ec2_instance_with_target_group(list(target_group_ui.values())[0][0].get('TargetGroupArn'), ui_id2)
-    # listener_ui = create_listener(list(target_group_ui.values())[0][0].get('TargetGroupArn'), list(load_balancer_ui.values())[0][0].get('LoadBalancerArn'))
-    # load_balancer_ui_dns = list(load_balancer_ui.values())[0][0].get('DNSName')
+    load_balancer_ui = create_load_balancer('sg-00ea2d108465f6b25', [
+        'subnet-073cd7a90757fd3a4', #TODO: update to dynamic, upload load balancer security group
+        'subnet-0e7ef3710998198bc',
+    ], 'ui-load-balancer')
+    target_group_ui = create_target_group(vpc_id, 'ui-load-balancer-target-group') #Temporary testing with my VPC_ID, will use vpc_id we generate
+    registered_target1_ui = register_ec2_instance_with_target_group(list(target_group_ui.values())[0][0].get('TargetGroupArn'), ui_id1)
+    registered_target2_ui = register_ec2_instance_with_target_group(list(target_group_ui.values())[0][0].get('TargetGroupArn'), ui_id2)
+    listener_ui = create_listener(list(target_group_ui.values())[0][0].get('TargetGroupArn'), list(load_balancer_ui.values())[0][0].get('LoadBalancerArn'))
+    load_balancer_ui_dns = list(load_balancer_ui.values())[0][0].get('DNSName')
     
-    # print("Visit the live site at " + load_balancer_ui_dns)
+    print("Visit the live site at " + load_balancer_ui_dns)
 
 deploy()

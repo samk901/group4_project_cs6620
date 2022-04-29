@@ -15,8 +15,8 @@ def create_load_balancer_security_group(vpc_id):
                                                                                                         }
                                                                                                           ])
         sg.authorize_ingress(IpPermissions=[{'IpProtocol': 'TCP',
-                                            'FromPort': 80,
-                                            'ToPort': 80,
+                                            'FromPort': 3000,
+                                            'ToPort': 3000,
                                             'IpRanges': [{'CidrIp': '0.0.0.0/0'}]
                                             }
                                             ]
@@ -53,7 +53,7 @@ def create_target_group(vpc_id, tg_name):
 
         tg = lb_client.create_target_group(
             Name=tg_name,
-            Port=80,
+            Port=3000,
             Protocol='HTTP',
             VpcId=vpc_id,
             TargetType='instance'
@@ -75,7 +75,7 @@ def register_ec2_instance_with_target_group(target_group_arn, ec2_instance_id):
             Targets=[
                 {
                     'Id': ec2_instance_id,
-                    'Port': 80,
+                    'Port': 3000,
                 }
             ],
         )
@@ -98,7 +98,7 @@ def create_listener(target_group_arn, load_balancer_arn):
                 },
                 ],
             LoadBalancerArn=load_balancer_arn,
-            Port=80,
+            Port=3000,
             Protocol='HTTP',
         )
 
