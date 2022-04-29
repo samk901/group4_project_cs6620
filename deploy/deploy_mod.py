@@ -44,34 +44,34 @@ def deploy():
     ui_ip2 = instances[4].public_ip_address
     ui_id2 = instances[4].instance_id
 
-    # #Setup db server with mongo and initialize dummy data in database
-    # create_db_server(key, db_ip)
-    # print('Try connecting at mongodb://' + db_ip)
+    #Setup db server with mongo and initialize dummy data in database
+    create_db_server(key, db_ip)
+    print('Try connecting at mongodb://' + db_ip)
 
-    # #Create 2 API servers and create/setup load balancer for api servers
-    # create_api_server(key, db_ip, api_ip1)
-    # create_api_server(key, db_ip, api_ip2)
-    # print('Try connecting at', 'http://' + api_ip1 + ':3000/graphql')
+    #Create 2 API servers and create/setup load balancer for api servers
+    create_api_server(key, db_ip, api_ip1)
+    create_api_server(key, db_ip, api_ip2)
+    print('Try connecting at', 'http://' + api_ip1 + ':3000/graphql')
 
-    # load_balancer_api = create_load_balancer(load_balancer_security_group.id, [
-    #     'subnet-073cd7a90757fd3a4', #TODO: Update to dynamic
-    #     'subnet-0e7ef3710998198bc',
-    # ], 'api-load-balancer')
-    # target_group_api = create_target_group(vpc_id, 'api-load-balancer-target-group') 
-    # registered_target1_api = register_ec2_instance_with_target_group(list(target_group_api.values())[0][0].get('TargetGroupArn'), api_id1) 
-    # registered_target2_api = register_ec2_instance_with_target_group(list(target_group_api.values())[0][0].get('TargetGroupArn'), api_id2)
-    # listener_api = create_listener(list(target_group_api.values())[0][0].get('TargetGroupArn'), list(load_balancer_api.values())[0][0].get('LoadBalancerArn'))
-    # load_balancer_api_dns = list(load_balancer_api.values())[0][0].get('DNSName')
+    load_balancer_api = create_load_balancer(load_balancer_security_group.id, [
+        'subnet-073cd7a90757fd3a4', #TODO: Update to dynamic
+        'subnet-0e7ef3710998198bc',
+    ], 'api-load-balancer')
+    target_group_api = create_target_group(vpc_id, 'api-load-balancer-target-group') 
+    registered_target1_api = register_ec2_instance_with_target_group(list(target_group_api.values())[0][0].get('TargetGroupArn'), api_id1) 
+    registered_target2_api = register_ec2_instance_with_target_group(list(target_group_api.values())[0][0].get('TargetGroupArn'), api_id2)
+    listener_api = create_listener(list(target_group_api.values())[0][0].get('TargetGroupArn'), list(load_balancer_api.values())[0][0].get('LoadBalancerArn'))
+    load_balancer_api_dns = list(load_balancer_api.values())[0][0].get('DNSName')
     #----------------------------------------------------------------------------------------------------------------------------------
 
     #Create 2 UI servers and create/setup load balancer for UI servers
-    create_ui_server(key, api_ip1, ui_ip1)
-    create_ui_server(key, api_ip2, ui_ip2)
+    create_ui_server(key, load_balancer_api_dns, ui_ip1)
+    create_ui_server(key, load_balancer_api_dns, ui_ip2)
     print('Try connecting at', 'http://' + ui_ip1 +':3000')
     print('Try connecting at', 'http://' + ui_ip2 +':3000')
 
     load_balancer_ui = create_load_balancer(load_balancer_security_group.id, [
-        'subnet-073cd7a90757fd3a4', #TODO: update to dynamic, upload load balancer security group
+        'subnet-073cd7a90757fd3a4', #TODO: update to dynamic
         'subnet-0e7ef3710998198bc',
     ], 'ui-load-balancer')
     target_group_ui = create_target_group(vpc_id, 'ui-load-balancer-target-group') #Temporary testing with my VPC_ID, will use vpc_id we generate
