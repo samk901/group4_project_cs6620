@@ -16,9 +16,9 @@ def deploy():
     create_iam_policy()
 
     #Create load balancer security group.  This will be used for both API load balancer and UI load balancer
-    load_balancer_security_group = create_load_balancer_security_group(vpc_id)
+    # load_balancer_security_group = create_load_balancer_security_group(vpc_id)
 
-    ec2_instance_security_group = create_security_group('final_project', 'EC2 instance security group', load_balancer_security_group.id)
+    # ec2_instance_security_group = create_security_group('final_project', 'EC2 instance security group', load_balancer_security_group.id)
 
     # Create ssh key
     keyname = create_pem()
