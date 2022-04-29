@@ -14,7 +14,7 @@ def deploy():
     print('Created key', key)
 
     # Create db instance
-    instances = create_instance(keyname, num_instances=3)
+    # instances = create_instance(keyname, num_instances=3)
     # db_ip = instances[0].public_ip_address
     # db_id = instances[0].instance_id
 
