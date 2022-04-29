@@ -43,10 +43,10 @@ def deploy():
     # create_db_server(key, db_ip)
     # print('Try connecting at mongodb://' + db_ip)
 
-    create_api_server(key, db_ip, api_ip)
-    print('Try connecting at', 'http://' + api_ip + ':3000/graphql')
+    # create_api_server(key, db_ip, api_ip)
+    # print('Try connecting at', 'http://' + api_ip + ':3000/graphql')
 
-    # create_ui_server(key, api_ip, ui_ip)
-    # print('Try connecting at', 'http://' + ui_ip+':3000')
+    create_ui_server(key, api_ip, ui_ip)
+    print('Try connecting at', 'http://' + ui_ip+':3000')
 
 deploy()
