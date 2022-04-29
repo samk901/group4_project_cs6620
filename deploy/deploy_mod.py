@@ -6,12 +6,14 @@ from boto_scripts.create_and_setup_load_balancer import create_load_balancer_sec
     create_target_group, register_ec2_instance_with_target_group, create_listener
 from boto_scripts.create_iam_policy import create_iam_policy
 from boto_scripts.create_servers import create_db_server, create_api_server, create_ui_server
+from boto_scripts.get_vpc_and_subnet_info import get_vpc_info, get_subnets
 
 
 def deploy():
 
-
-    vpc_id = 'vpc-08a8476b32003e8d3'
+    #Get default VpcId and first two subnets, which will be used in the script
+    vpc_id = get_vpc_info()
+    subnet_ids = get_subnets()
 
     create_iam_policy()
 
@@ -53,10 +55,7 @@ def deploy():
     create_api_server(key, db_ip, api_ip2)
     print('Try connecting at', 'http://' + api_ip1 + ':3000/graphql')
 
-    load_balancer_api = create_load_balancer(load_balancer_security_group.id, [
-        'subnet-073cd7a90757fd3a4', #TODO: Update to dynamic
-        'subnet-0e7ef3710998198bc',
-    ], 'api-load-balancer')
+    load_balancer_api = create_load_balancer(load_balancer_security_group.id, [subnet_ids[0], subnet_ids[1],], 'api-load-balancer')
     target_group_api = create_target_group(vpc_id, 'api-load-balancer-target-group') 
     registered_target1_api = register_ec2_instance_with_target_group(list(target_group_api.values())[0][0].get('TargetGroupArn'), api_id1) 
     registered_target2_api = register_ec2_instance_with_target_group(list(target_group_api.values())[0][0].get('TargetGroupArn'), api_id2)
@@ -70,16 +69,18 @@ def deploy():
     print('Try connecting at', 'http://' + ui_ip1 +':3000')
     print('Try connecting at', 'http://' + ui_ip2 +':3000')
 
-    load_balancer_ui = create_load_balancer(load_balancer_security_group.id, [
-        'subnet-073cd7a90757fd3a4', #TODO: update to dynamic
-        'subnet-0e7ef3710998198bc',
-    ], 'ui-load-balancer')
-    target_group_ui = create_target_group(vpc_id, 'ui-load-balancer-target-group') #Temporary testing with my VPC_ID, will use vpc_id we generate
+    load_balancer_ui = create_load_balancer(load_balancer_security_group.id, [subnet_ids[0], subnet_ids[1],], 'ui-load-balancer')
+    target_group_ui = create_target_group(vpc_id, 'ui-load-balancer-target-group')
     registered_target1_ui = register_ec2_instance_with_target_group(list(target_group_ui.values())[0][0].get('TargetGroupArn'), ui_id1)
     registered_target2_ui = register_ec2_instance_with_target_group(list(target_group_ui.values())[0][0].get('TargetGroupArn'), ui_id2)
     listener_ui = create_listener(list(target_group_ui.values())[0][0].get('TargetGroupArn'), list(load_balancer_ui.values())[0][0].get('LoadBalancerArn'))
     load_balancer_ui_dns = list(load_balancer_ui.values())[0][0].get('DNSName')
-    
-    print("Visit the live site at " + load_balancer_ui_dns)
+    #--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    #Print key information
+    print('DB ec2 instance id is: ' + db_id)
+    print('API ec2 instance ids are: ' + api_id1 + ' and ' + api_id2)
+    print('UI ec2 instance ids are: ' + ui_id1 + ' and ' + ui_id2)
+    print("Once both load balancers are active, visit the site at " + load_balancer_ui_dns + ':3000')
 
 deploy()
