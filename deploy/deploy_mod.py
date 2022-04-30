@@ -1,6 +1,5 @@
 from boto_scripts.create_key_pair import create_pem
 from boto_scripts.create_instance_mod import create_instance
-
 from boto_scripts.create_security_group import create_security_group
 from boto_scripts.create_and_setup_load_balancer import create_load_balancer_security_group, create_load_balancer, \
     create_target_group, register_ec2_instance_with_target_group, create_listener
@@ -10,6 +9,10 @@ from boto_scripts.get_vpc_and_subnet_info import get_vpc_info, get_subnets
 from os import system
 
 
+#Deploy script to deploy single page application: UI, API, DB, and Load Balancer
+#Configures UI and API servers to only only inbound traffic from load balancer
+#Assumes AWS account where this is being run has one VPC, which is the default vpc
+#Note: Will take 
 def deploy():
 
     system('pip3 install paramiko')
@@ -23,12 +26,12 @@ def deploy():
     #Create load balancer security group.  This will be used for both API load balancer and UI load balancer
     load_balancer_security_group = create_load_balancer_security_group(vpc_id)
 
+    #Create ec2 instance security group.  Do not change the name 'final_project' in parameter
     ec2_instance_security_group = create_security_group('final_project', 'EC2 instance security group', load_balancer_security_group.id)
 
     # Create ssh key
     keyname = create_pem()
     key = keyname + '.pem'
-    print('Created key', key)
 
     # Create 5 EC2 instaces (1 for database, 2 for API servers, 2 for UI servers)
     instances = create_instance(keyname, num_instances=5)
@@ -51,12 +54,10 @@ def deploy():
 
     #Setup db server with mongo and initialize dummy data in database
     create_db_server(key, db_ip)
-    print('Try connecting at mongodb://' + db_ip)
 
     #Create 2 API servers and create/setup load balancer for api servers
     create_api_server(key, db_ip, api_ip1)
     create_api_server(key, db_ip, api_ip2)
-    print('Try connecting at', 'http://' + api_ip1 + ':3000/graphql')
 
     load_balancer_api = create_load_balancer(load_balancer_security_group.id, [subnet_ids[0], subnet_ids[1],], 'api-load-balancer')
     target_group_api = create_target_group(vpc_id, 'api-load-balancer-target-group') 
