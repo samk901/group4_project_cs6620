@@ -1,6 +1,6 @@
 ## Welcome
 
-For our team’s CS6620 final project we took an existing bug tracking application (single page app) and hosted it on AWS. A bug tracking application digests requests from various users potentially around the globe.
+For our team’s CS6620 final project, we took an existing bug tracking application (single page app) and hosted it on AWS. A bug tracking application digests requests from various users potentially around the globe.
 
 This repository includes the application code as well as boto3 python scripts to deploy the application programatically.
 
@@ -20,7 +20,7 @@ IMPORTANT NOTE:
 When running the above deploy script, we assume the AWS environment has a single VPC (default vpc).
 Other than that, we assume the AWS environment is clean (no pre-exisitng security groups, load balancers, etc from previous runs of the script)
 
-When running the script multiple times in a row, please delete anything created from previous runs
+When running the script multiple times in a row, please delete anything created from previous runs.
 
 
 ## Architecture
