@@ -9,6 +9,7 @@ This repository includes the application code as well as boto3 python scripts to
 Deploy the application programtically with no manual steps required
 
 From /deploy
+
 ```console
 python3 deploy_application.py
 ```
@@ -22,6 +23,7 @@ Other than that, we assume the AWS environment is clean (no pre-exisitng securit
 
 When running the script multiple times in a row, please delete anything created from previous runs.
 
+If the url isn't working, ensure that the url is using http not https. Some browsers (e.g. FireFox) might continuously try to force routing with https. Chrome may work better.
 
 ## Architecture
 
