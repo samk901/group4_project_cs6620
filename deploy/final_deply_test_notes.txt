@@ -1,0 +1,16 @@
+Test 1 (4/29 @ 11:30 EST)
+
+The following need to be installed in order for /deploy/deploy_mod.py to work
+
+1) Requires python3
+2) Requires pip
+3) Requires boto3
+
+4) Requires aws configuration
+    Access Key ID
+    Secret Access Key
+    Default Region Name: 'us-east-1'
+    Default Output Format: json
+
+5) ** Also could require paramiko
+        'pip install paramiko'

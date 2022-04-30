@@ -28,9 +28,11 @@ def create_instance(pem_key, num_instances=1):
                 },
             ],
             SecurityGroups=['final_project'],
-            BlockDeviceMappings=[{"DeviceName": "/dev/sda1", "Ebs": {"VolumeSize": 10}}]
+            BlockDeviceMappings=[
+                {"DeviceName": "/dev/sda1", "Ebs": {"VolumeSize": 10}}]
         )
-        print('please wait while {num} instances are being created..'.format(num=num_instances))
+        print('please wait while {num} instances are being created..'.format(
+            num=num_instances))
 
         # ip_addresses = []
         for num in range(num_instances):
@@ -40,7 +42,8 @@ def create_instance(pem_key, num_instances=1):
                 instances[num].load()
                 waiter = boto3.client('ec2').get_waiter('instance_status_ok')
                 waiter.wait(InstanceIds=[instance_id])
-                print('instance {ip} is ready'.format(ip=instances[num].public_ip_address))
+                print('instance {ip} is ready'.format(
+                    ip=instances[num].public_ip_address))
                 # ip_addresses.append(instances[instance_num].public_ip_address)
             except Exception as e:
                 print(e)
