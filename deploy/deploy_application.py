@@ -12,7 +12,10 @@ from os import system
 #Deploy script to deploy single page application: UI, API, DB, and Load Balancer
 #Configures UI and API servers to only only inbound traffic from load balancer
 #Assumes AWS account where this is being run has one VPC, which is the default vpc
-#Note: Will take 
+#Notes: 
+#   - Run with python3
+#   - Run with clean AWS slate (i.e. no existing security groups, load balancers, etc from previous runs of this script) 
+#   - Script will take ~15 minutes to complete
 def deploy():
 
     system('pip3 install paramiko')
@@ -70,8 +73,6 @@ def deploy():
     #Create 2 UI servers and create/setup load balancer for UI servers
     create_ui_server(key, load_balancer_api_dns, ui_ip1)
     create_ui_server(key, load_balancer_api_dns, ui_ip2)
-    print('Try connecting at', 'http://' + ui_ip1 +':3000')
-    print('Try connecting at', 'http://' + ui_ip2 +':3000')
 
     load_balancer_ui = create_load_balancer(load_balancer_security_group.id, [subnet_ids[0], subnet_ids[1],], 'ui-load-balancer')
     target_group_ui = create_target_group(vpc_id, 'ui-load-balancer-target-group')
